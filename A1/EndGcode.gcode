@@ -82,14 +82,14 @@ M106 P3 S0 ; turn off chamber cooling fan
 ;G1 X27 F15000 ; wipe
 
 ; pull back filament to AMS
-M620 S255
-G1 X267 F15000
-T255
-G1 X-28.5 F18000
-G1 X-48.2 F3000
-G1 X-28.5 F18000
-G1 X-48.2 F3000
-M621 S255
+; M620 S255
+;G1 X267 F15000
+;T255
+;G1 X-28.5 F18000
+;G1 X-48.2 F3000
+;G1 X-28.5 F18000
+;G1 X-48.2 F3000
+;M621 S255
 
 M104 S0 ; turn off hotend
 
