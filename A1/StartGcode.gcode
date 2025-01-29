@@ -9,7 +9,7 @@ M9833.2
 ;===== start to heat heatbead&hotend==========
 M1002 gcode_claim_action : 2
 M1002 set_filament_type:{filament_type[initial_no_support_extruder]}
-M104 S140
+M104 S170
 M140 S[bed_temperature_initial_layer_single]
 
 ;=====start printer sound ===================
@@ -351,7 +351,7 @@ M109 S{nozzle_temperature_initial_layer[initial_extruder]-50}
 
 G28 Z P0 T300; home z with low precision,permit 300deg temperature
 G29.2 S0 ; turn off ABL
-M104 S140 ; prepare to abl
+M104 S170 ; prepare to abl
 G0 Z5 F20000
 
 G0 X128 Y261 F20000  ; move to exposed steel surface
@@ -452,7 +452,7 @@ G2 I-0.75 J0 X-1.5
 G2 I1 J0 X2
 G2 I-0.75 J0 X-1.5
 
-M109 S140
+M109 S170
 M106 S255 ; turn on fan (G28 has turn off fan)
 
 M211 R; pop softend status
@@ -471,7 +471,7 @@ G1 X0 Y0 F30000
 G29.2 S1 ; turn on ABL
 
 M190 S[bed_temperature_initial_layer_single]; ensure bed temp
-M109 S140
+M109 S170
 M106 S0 ; turn off fan , too noisy
 
 M622 J1
