@@ -1,5 +1,6 @@
 ;===== machine: A1 =========================
 ;===== date: 20240620 =====================
+M982.2 S1 ; turn on cog noise reduction
 G392 S0
 M9833.2
 ;M400
@@ -111,32 +112,33 @@ M620 S[initial_no_support_extruder]A   ; switch material if AMS exist
     M1002 gcode_claim_action : 4
     M400
     M1002 set_filament_type:UNKNOWN
-    M109 S[nozzle_temperature_initial_layer]
-    M104 S250
+    ; M109 S[nozzle_temperature_initial_layer]
+    ; M104 S250
     M400
     T[initial_no_support_extruder]
     G1 X-48.2 F3000
     M400
 
     M620.1 E F{filament_max_volumetric_speed[initial_no_support_extruder]/2.4053*60} T{nozzle_temperature_range_high[initial_no_support_extruder]}
-    M109 S250 ;set nozzle to common flush temp
-    M106 P1 S0
+    ; M109 S250 ;set nozzle to common flush temp
+    ; M106 P1 S0
     G92 E0
-    G1 E50 F200
+    ; G1 E50 F200
     M400
     M1002 set_filament_type:{filament_type[initial_no_support_extruder]}
 M621 S[initial_no_support_extruder]A
 
-M109 S{nozzle_temperature_range_high[initial_no_support_extruder]} H300
-G92 E0
-G1 E50 F200 ; lower extrusion speed to avoid clog
-M400
-M106 P1 S178
-G92 E0
-G1 E5 F200
-M104 S{nozzle_temperature_initial_layer[initial_no_support_extruder]}
-G92 E0
-G1 E-0.5 F300
+
+;M109 S{nozzle_temperature_range_high[initial_no_support_extruder]} H300
+;G92 E0
+;G1 E50 F200 ; lower extrusion speed to avoid clog
+;M400
+;M106 P1 S178
+;G92 E0
+;G1 E5 F200
+;M104 S{nozzle_temperature_initial_layer[initial_no_support_extruder]}
+;G92 E0
+;G1 E-0.5 F300
 
 G1 X-28.5 F30000
 G1 X-48.2 F3000
