@@ -1,5 +1,6 @@
 ;===== machine: A1 =========================
 ;===== date: 20240620 =====================
+M982.2 S1 ; turn on cog noise reduction
 G392 S0
 M9833.2
 ;M400
@@ -8,7 +9,7 @@ M9833.2
 ;===== start to heat heatbead&hotend==========
 M1002 gcode_claim_action : 2
 M1002 set_filament_type:{filament_type[initial_no_support_extruder]}
-M104 S140
+M104 S170
 M140 S[bed_temperature_initial_layer_single]
 
 ;=====start printer sound ===================
@@ -111,32 +112,33 @@ M620 S[initial_no_support_extruder]A   ; switch material if AMS exist
     M1002 gcode_claim_action : 4
     M400
     M1002 set_filament_type:UNKNOWN
-    M109 S[nozzle_temperature_initial_layer]
-    M104 S250
+    ; M109 S[nozzle_temperature_initial_layer]
+    ; M104 S250
     M400
     T[initial_no_support_extruder]
     G1 X-48.2 F3000
     M400
 
     M620.1 E F{filament_max_volumetric_speed[initial_no_support_extruder]/2.4053*60} T{nozzle_temperature_range_high[initial_no_support_extruder]}
-    M109 S250 ;set nozzle to common flush temp
-    M106 P1 S0
+    ; M109 S250 ;set nozzle to common flush temp
+    ; M106 P1 S0
     G92 E0
-    G1 E50 F200
+    ; G1 E50 F200
     M400
     M1002 set_filament_type:{filament_type[initial_no_support_extruder]}
 M621 S[initial_no_support_extruder]A
 
-M109 S{nozzle_temperature_range_high[initial_no_support_extruder]} H300
-G92 E0
-G1 E50 F200 ; lower extrusion speed to avoid clog
-M400
-M106 P1 S178
-G92 E0
-G1 E5 F200
-M104 S{nozzle_temperature_initial_layer[initial_no_support_extruder]}
-G92 E0
-G1 E-0.5 F300
+
+;M109 S{nozzle_temperature_range_high[initial_no_support_extruder]} H300
+;G92 E0
+;G1 E50 F200 ; lower extrusion speed to avoid clog
+;M400
+;M106 P1 S178
+;G92 E0
+;G1 E5 F200
+;M104 S{nozzle_temperature_initial_layer[initial_no_support_extruder]}
+;G92 E0
+;G1 E-0.5 F300
 
 G1 X-28.5 F30000
 G1 X-48.2 F3000
@@ -349,7 +351,7 @@ M109 S{nozzle_temperature_initial_layer[initial_extruder]-50}
 
 G28 Z P0 T300; home z with low precision,permit 300deg temperature
 G29.2 S0 ; turn off ABL
-M104 S140 ; prepare to abl
+M104 S170 ; prepare to abl
 G0 Z5 F20000
 
 G0 X128 Y261 F20000  ; move to exposed steel surface
@@ -450,7 +452,7 @@ G2 I-0.75 J0 X-1.5
 G2 I1 J0 X2
 G2 I-0.75 J0 X-1.5
 
-M109 S140
+M109 S170
 M106 S255 ; turn on fan (G28 has turn off fan)
 
 M211 R; pop softend status
@@ -469,7 +471,7 @@ G1 X0 Y0 F30000
 G29.2 S1 ; turn on ABL
 
 M190 S[bed_temperature_initial_layer_single]; ensure bed temp
-M109 S140
+M109 S170
 M106 S0 ; turn off fan , too noisy
 
 M622 J1
