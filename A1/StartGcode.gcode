@@ -126,6 +126,17 @@ M620 S[initial_no_support_extruder]A   ; switch material if AMS exist
     G1 E50 F200
     M400
     M1002 set_filament_type:{filament_type[initial_no_support_extruder]}
+    
+    ; move from under line
+    G1 E50 F200 ; lower extrusion speed to avoid clog
+    M400
+    M106 P1 S178
+    G92 E0
+    G1 E5 F200
+    M104 S{nozzle_temperature_initial_layer[initial_no_support_extruder]}
+    G92 E0
+    G1 E-0.5 F300
+    ; end
 M621 S[initial_no_support_extruder]A
 
 
@@ -264,7 +275,7 @@ M106 S200 ; turn on fan
 M1002 gcode_claim_action : 14
 
 M975 S1
-M106 S255 ; turn on fan (G28 has turn off fan)
+; M106 S255 ; turn on fan (G28 has turn off fan)
 M211 S; push soft endstop status
 M211 X0 Y0 Z0 ;turn off Z axis endstop
 
