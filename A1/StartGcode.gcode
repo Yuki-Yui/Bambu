@@ -9,7 +9,7 @@ M9833.2
 ;===== start to heat heatbead&hotend==========
 M1002 gcode_claim_action : 2
 M1002 set_filament_type:{filament_type[initial_no_support_extruder]}
-M104 S170
+M104 S140
 M140 S[bed_temperature_initial_layer_single]
 
 ;=====start printer sound ===================
@@ -74,11 +74,11 @@ G0 Y254 F3000
 G91
 G1 Z-5 F1200
 
-M109 S25 H140
+M109 S25 H140 ; ※1のため
 
 M17 E0.3
 M83
-G1 E10 F1200
+G1 E10 F1200 ; ※1 冷えたフィラメントをノズルに押し付けてベッドレベリングの精度向上
 G1 E-0.5 F30
 M17 D
 
@@ -112,18 +112,18 @@ M620 S[initial_no_support_extruder]A   ; switch material if AMS exist
     M1002 gcode_claim_action : 4
     M400
     M1002 set_filament_type:UNKNOWN
-    ; M109 S[nozzle_temperature_initial_layer]
-    ; M104 S250
+    M109 S[nozzle_temperature_initial_layer]
+    M104 S250
     M400
     T[initial_no_support_extruder]
     G1 X-48.2 F3000
     M400
 
     M620.1 E F{filament_max_volumetric_speed[initial_no_support_extruder]/2.4053*60} T{nozzle_temperature_range_high[initial_no_support_extruder]}
-    ; M109 S250 ;set nozzle to common flush temp
-    ; M106 P1 S0
+    M109 S250 ;set nozzle to common flush temp
+    M106 P1 S0
     G92 E0
-    ; G1 E50 F200
+    G1 E50 F200
     M400
     M1002 set_filament_type:{filament_type[initial_no_support_extruder]}
 M621 S[initial_no_support_extruder]A
@@ -230,8 +230,8 @@ M623 ; end of "draw extrinsic para cali paint"
 ;M400
 ;M73 P1.717
 
-M104 S170 ; prepare to wipe nozzle
-M106 S255 ; turn on fan
+M104 S140 ; prepare to wipe nozzle
+M106 S200 ; turn on fan
 
 ;===== mech mode fast check start =====================
 ;M1002 gcode_claim_action : 3
@@ -347,11 +347,11 @@ M211 X0 Y0 Z0 ;turn off Z axis endstop
 G1 Z10 F1200
 G0 X118 Y261 F30000
 G1 Z5 F1200
-M109 S{nozzle_temperature_initial_layer[initial_extruder]-50}
+; M109 S{nozzle_temperature_initial_layer[initial_extruder]-50}
 
 G28 Z P0 T300; home z with low precision,permit 300deg temperature
 G29.2 S0 ; turn off ABL
-M104 S170 ; prepare to abl
+M104 S140 ; prepare to abl
 G0 Z5 F20000
 
 G0 X128 Y261 F20000  ; move to exposed steel surface
@@ -452,8 +452,9 @@ G2 I-0.75 J0 X-1.5
 G2 I1 J0 X2
 G2 I-0.75 J0 X-1.5
 
-M109 S170
-M106 S255 ; turn on fan (G28 has turn off fan)
+; M109 S140
+M104 S140
+; M106 S255 ; turn on fan (G28 has turn off fan)
 
 M211 R; pop softend status
 
@@ -470,8 +471,8 @@ G1 Z5 F1200
 G1 X0 Y0 F30000
 G29.2 S1 ; turn on ABL
 
-M190 S[bed_temperature_initial_layer_single]; ensure bed temp
-M109 S170
+; M190 S[bed_temperature_initial_layer_single]; ensure bed temp
+; M109 S140
 M106 S0 ; turn off fan , too noisy
 
 M622 J1
